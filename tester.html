@@ -134,7 +134,7 @@ text [macro+] = ‛\n{ onenter:\n[«macro»true]\n}\n’
 macro [x] = ‛«x»’
   
 ShowPhrase [kShow filename kat Coordinate] = ‛\n["image","«filename»",«Coordinate»],’
-MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","«filename»","???",«Coordinate»«TimeSpan»,"easin"],’
+MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","«filename»",«Coordinate»,«TimeSpan»,"ease in"],’
 WaitPhrase [kWait number kframes] = ‛\n["wait",«number»],’
 FadeToBlackPhrase [kFade kto kblack TimeSpan] = ‛\n["fadeout",«TimeSpan»],’
 JumpPhrase [kJump ChapterName] = ‛\n["jump","«ChapterName»"],’
