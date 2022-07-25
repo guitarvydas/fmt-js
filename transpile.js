@@ -4,11 +4,9 @@ function transpile (src, grammarName, grammars, fmt) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
 	[success, semanticsFunctionsAsString] = fmtjs (fmt);
-	console.log (success);
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
 	var sem = grammar.createSemantics ();
 	try {
-	    console.log (evalableSemanticsFunctions);
 	    semobj = eval (evalableSemanticsFunctions);
 	} catch (err) {
 	    return [false, null, 'error compiling .fmt specification<br><br>' + err.message + ' ' + semanticsFunctionsAsString];
@@ -20,7 +18,7 @@ function transpile (src, grammarName, grammars, fmt) {
 	}
         var generatedFmtWalker = sem (cst);
         try {
-	    tracing = true;
+	    //tracing = true;
 	    var generated = generatedFmtWalker._fmt ();
 	} catch (err) {
 	    return [false, generated];
@@ -41,6 +39,10 @@ function patternmatch (src, grammarName, grammars) {
     } catch (err) {
 	return [false, undefined, undefined, `grammar ${grammarName} not found in given grammars`];
     }
+    if (grammar === undefined) {
+	return [false, undefined, undefined, `grammar '${grammarName}' not found in given grammars`];
+    }
+
     try {
 	var cst = grammar.match (src);
     } catch (err) {
