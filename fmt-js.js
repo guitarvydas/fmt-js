@@ -119,7 +119,7 @@ _ruleExit ("${getRuleName ()}");
     },
     ////
     
-    // RuleLHS [name lb @Params rb] = [[${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
+    // RuleLHS [name lb @Params rb] = [[${name}: function (${extractFormals(name)}) {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
     // ]]
     RuleLHS : function (_name,_lb,_Params,_rb) { 
         _ruleEnter ("RuleLHS");
@@ -128,7 +128,7 @@ _ruleExit ("${getRuleName ()}");
         var lb = _lb._fmt ();
         var Params = _Params._fmt ().join ('');
         var rb = _rb._fmt ();
-        var _result = `${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
+        var _result = `${name}: function (${extractFormals(name)}) {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
 `; 
         _ruleExit ("RuleLHS");
         return _result; 
