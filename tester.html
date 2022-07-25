@@ -44,13 +44,13 @@
 Test {
 Main = A B
 A = "a"
-A = "b"
+B = "b"
 }
 `;
 
       const testfmt = String.raw`
 Test {
-Main [A] = ‛«A»’
+Main [A B] = ‛«B»«A»’
 A [k] = ‛«k»’
 B [k] = ‛«k»’
 }
