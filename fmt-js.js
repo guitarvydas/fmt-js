@@ -70,6 +70,10 @@ var varNameStack = [];
 //// top = spaces name spaces "{" rule+ "}" spaces
 // top [ws1 name ws2 lb @rule rb ws3] = [[{
 // ${rule}
+    // _terminal: function () { return this.sourceString; },
+    // _iter: function (...children) { return children.map(c => c._fmt ()); },
+    // spaces: function (x) { return this.sourceString; },
+    // space: function (x) { return this.sourceString; }
 // }
 // ]]
 
@@ -87,6 +91,10 @@ const semObject = {
         var ws3 = _ws3._fmt ();
         var _result = `{
 ${rule}
+    _terminal: function () { return this.sourceString; },
+    _iter: function (...children) { return children.map(c => c._fmt ()); },
+    spaces: function (x) { return this.sourceString; },
+    space: function (x) { return this.sourceString; }
 }
 `; 
         _ruleExit ("top");
