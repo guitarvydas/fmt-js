@@ -18,7 +18,14 @@ function transpile (src, grammarName, grammars, fmt) {
 	} catch (err) {
 	    return [false, null, "error in .fmt specifcation<br><br>" + err.message];
 	}
-	return [true, "NIY WIP", ""];
+        var generatedFmtWalker = sem (cst);
+        try {
+	    tracing = true;
+	    var generated = generatedFmtWalker._fmt ();
+	} catch (err) {
+	    return [false, generated];
+	}
+	return [true, generated];
     }
 }
 
