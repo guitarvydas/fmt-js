@@ -68,9 +68,9 @@ var varNameStack = [];
 // xxx
 
 //// top = spaces name spaces "{" rule+ "}" spaces
-// top [ws1 name ws2 lb @rule rb ws3] = [[const semObject = {
-// ${rule}{}
-// };
+// top [ws1 name ws2 lb @rule rb ws3] = [[{
+// ${rule}
+// }
 // ]]
 
 const semObject = {
@@ -85,9 +85,9 @@ const semObject = {
         var rule = _rule._fmt ().join ('');
         var rb = _rb._fmt ();
         var ws3 = _ws3._fmt ();
-        var _result = `const semObject = {
-${rule}{}
-};
+        var _result = `{
+${rule}
+}
 `; 
         _ruleExit ("top");
         return _result; 
@@ -98,7 +98,7 @@ ${rule}{}
     
     // rule [lhs ws1 keq ws2 rws] = [[${lhs}${rws}
     // _ruleExit ("${getRuleName ()}");
-    // }
+    // },
     // ]]
 
 
@@ -112,14 +112,14 @@ ${rule}{}
         var rws = _rws._fmt ();
         var _result = `${lhs}${rws}
 _ruleExit ("${getRuleName ()}");
-}
+},
 `; 
         _ruleExit ("rule");
         return _result; 
     },
     ////
     
-    // RuleLHS [name lb @Params rb] = [[${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params},
+    // RuleLHS [name lb @Params rb] = [[${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
     // ]]
     RuleLHS : function (_name,_lb,_Params,_rb) { 
         _ruleEnter ("RuleLHS");
@@ -128,7 +128,7 @@ _ruleExit ("${getRuleName ()}");
         var lb = _lb._fmt ();
         var Params = _Params._fmt ().join ('');
         var rb = _rb._fmt ();
-        var _result = `${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params},
+        var _result = `${name}: function () {\n_ruleEnter ("${name}");${setRuleName (name)}${Params}
 `; 
         _ruleExit ("RuleLHS");
         return _result; 
@@ -291,4 +291,10 @@ function _ruleExit (ruleName) {
 function getFmtGrammar () {
     return fmtGrammar;
 }
+
+  // helper functions
+  var ruleName = "???";
+  function setRuleName (s) { ruleName = s; return "";}
+  function getRuleName () { return ruleName; }
+
 
