@@ -9,6 +9,14 @@ Meant to specify semantics for Ohm-JS grammars.
 3. Click "Generate JavaScript from FMT specification".
 4. Cut/paste the generated code from the output window ("equivalent JavaScript code") into your Ohm-JS project.
 
+## Transpile ()
+
+To test the transpile function...
+5. Load `tester.html` into a browser.
+6. Click "Test small" button to see that everything has loaded and is working.
+7. Reload, click "Test Game Language (Ghost Stars)" button to convert a piece of a game script to JSON.
+
+
 # Beautiful Assembler
 
 > ~31:50 "In a 'real' Computer Science, the best languages of an era should serve as 'assembly code' for the next generation of expression.
@@ -57,3 +65,5 @@ I strongly recommend using Ohm-Editor and Ohm-JS for grammar development.
 
 # Acknowledgements
 The grammar for the "big test" is based on parsing a snippet of code in WrittenScript](https://github.com/KinectTheUnknown/WrittenScript) discussed in the Discord [ohmland](https://discord.com/channels/779282197152661525/779286160597319680/992714506033692692)
+
+The source code for the Ghost Stars test is a snippet from [Ghost Stars](https://oofoe.itch.io/ghost-stars).
