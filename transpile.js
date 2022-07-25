@@ -1,7 +1,7 @@
 function transpile (src, grammarName, grammars, fmt) {
     [matchsuccess, grammar, cst, errormessage] = patternmatch (src, grammarName, grammars);
     if (!matchsuccess) {
-	return [false, "", "pattern matching error " + errormessage];
+	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
 	[success, semanticsFunctionsAsString] = fmtjs (fmt);
 	console.log (success);
@@ -11,12 +11,12 @@ function transpile (src, grammarName, grammars, fmt) {
 	    console.log (evalableSemanticsFunctions);
 	    semobj = eval (evalableSemanticsFunctions);
 	} catch (err) {
-	    return [false, null, 'error compiling .fmt specification ' + err.message + ' ' + semanticsFunctionsAsString];
+	    return [false, null, 'error compiling .fmt specification<br><br>' + err.message + ' ' + semanticsFunctionsAsString];
 	}
 	try {
 	    sem.addOperation ("_fmt", semobj);
 	} catch (err) {
-	    return [false, null, "error in .fmt specifcation " + err.message];
+	    return [false, null, "error in .fmt specifcation<br><br>" + err.message];
 	}
 	return [true, "NIY WIP", ""];
     }

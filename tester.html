@@ -56,7 +56,6 @@ A [k] = ‛«k»’
 
       function test () {
 	  document.getElementById('src').innerHTML = src;
-	  tracing = true;
 	  [success, transpiled, errormessage] = transpile (src, "Test", testgrammar, testfmt);
 	  if (success) {
 	      document.getElementById('output').value = transpiled;
