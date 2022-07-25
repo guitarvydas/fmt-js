@@ -22,7 +22,8 @@ function fmtjs (fmtsrc) {
         var generated = generatedFmtWalker._fmt ();
         return [true, generated];
     } catch (err) {
-        throw "error generating code from FMT specification";
+        var msg = "error generating code from FMT specification<br><br>" + err.message;
+        return [false, msg];
     }
 }
 
@@ -257,33 +258,33 @@ function _ruleInit () {
 }
 
 function traceSpaces () {
+    var s = '';
     var n = traceDepth;
     while (n > 0) {
-        process.stderr.write (" ");
+        s += ' ';
         n -= 1;
     }
-    process.stderr.write ('[');
-    process.stderr.write (traceDepth.toString ());
-    process.stderr.write (']');
+    s += `[${traceDepth.toString ()}]`;
+    return s;
 }
 
 function _ruleEnter (ruleName) {
     if (tracing) {
         traceDepth += 1;
-        traceSpaces ();
-        process.stderr.write("enter: ");
-        process.stderr.write (ruleName.toString ());
-        process.stderr.write ("\n");
+        var s = traceSpaces ();
+        s += 'enter: ';
+        s += ruleName.toString ();
+        console.log (s);
     }
 }
 
 function _ruleExit (ruleName) {
     if (tracing) {
-        traceSpaces ();
+        var s = traceSpaces ();
         traceDepth -= 1;
-        process.stderr.write("exit: "); 
-        process.stderr.write (ruleName); 
-        process.stderr.write ("\n");
+        s += 'exit: ';
+        s += ruleName.toString ();
+        console.log (s);
     }
 }
 
