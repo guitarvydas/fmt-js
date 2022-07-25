@@ -34,17 +34,17 @@ function patternmatch (src, grammarName, grammars) {
     try {
 	var grammarSpecs = ohm.grammars (grammars);
     } catch (err) {
-	return [false, None, None, err.message];
+	return [false, undefined, undefined, err.message];
     }
     try {
 	var grammar = grammarSpecs [grammarName];
     } catch (err) {
-	return [false, None, None, `grammar ${grammarName} not found in given grammars`];
+	return [false, undefined, undefined, `grammar ${grammarName} not found in given grammars`];
     }
     try {
 	var cst = grammar.match (src);
     } catch (err) {
-	return [false, None, None, err.message];
+	return [false, undefined, undefined, err.message];
     }
     return [true, grammar, cst, ""];
 }

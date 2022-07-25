@@ -38,12 +38,13 @@
 
     <script>
 
-      const src = String.raw`a`;
+      const src = String.raw`ab`;
       
       const testgrammar = String.raw`
 Test {
-Main = A
+Main = A B
 A = "a"
+A = "b"
 }
 `;
 
@@ -51,6 +52,7 @@ A = "a"
 Test {
 Main [A] = ‛«A»’
 A [k] = ‛«k»’
+B [k] = ‛«k»’
 }
 `;
 
