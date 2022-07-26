@@ -1,0 +1,115 @@
+      const smallfmt = String.raw`
+Test {
+Main [A B] = ‛«B»«A»’
+A [k] = ‛«k»’
+B [k] = ‛«k»’
+}
+`;
+
+const ghostStarsSrc = String.raw`
+❖ Show prolog_bg at 0x-550. Move prolog_bg to 0x0
+over 300 frames. Wait 150 frames.
+
+		    CHEL:NA
+	  The last time I saw
+	  her... She was smiling. As
+	  if she had some secret that
+	  she couldn't wait to tell me.
+	  
+	  And then, in a sudden wash of
+	  red, she was gone.
+	  
+	  Gone as if she had never stood
+	  beneath the uncaring stars.
+
+❖ Fade to black over 43 frames. Jump INTRO.
+`;
+
+      const ghostStarsGrammar = String.raw`
+GhostStars {
+text = macro+
+
+macro = 
+  | applySyntactic<ShowPhrase>
+  | applySyntactic<MovePhrase>
+  | applySyntactic<WaitPhrase>
+  | applySyntactic<FadeToBlackPhrase>
+  | applySyntactic<JumpPhrase>
+  | lex_spoken
+  | period
+  | separator
+  | nls
+  | any
+  
+ShowPhrase = "Show" filename "at" Coordinate
+MovePhrase = "Move" filename "to" Coordinate TimeSpan
+WaitPhrase = "Wait" number "frames"
+FadeToBlackPhrase = "Fade" "to" "black" TimeSpan
+JumpPhrase = "Jump" ChapterName
+
+lex_spoken = speaker spoken
+
+speaker = speakerSpaces name
+speakerSpaces = 
+  | "                    " -- spaces20
+  | tab tab "    "         -- tabtabspaces4
+
+Coordinate = number "x" number
+TimeSpan = "over" number "frames"
+ChapterName = name
+filename = name
+
+spoken = spokenchar+
+spokenchar = ~separator any
+
+period = "."
+separator = "❖"
+
+name = nameFirst nameRest*
+nameFirst = letter
+nameRest = "_" | ":" | digit | nameFirst
+number = "-"? digit+
+
+nls = nl+
+nl = "\n"
+tab = "\t"
+}
+`;
+
+  const jsonfmt = String.raw`
+GhostStars {
+text [macro+] = ‛\n{ onenter:\n[«macro»true]\n}\n’
+
+macro [x] = ‛«x»’
+  
+ShowPhrase [kShow filename kat Coordinate] = ‛\n["image","«filename»",«Coordinate»],’
+MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","«filename»",«Coordinate»,«TimeSpan»,"ease in"],’
+WaitPhrase [kWait number kframes] = ‛\n["wait",«number»],’
+FadeToBlackPhrase [kFade kto kblack TimeSpan] = ‛\n["fadeout",«TimeSpan»],’
+JumpPhrase [kJump ChapterName] = ‛\n["jump","«ChapterName»"],’
+lex_spoken [speaker spoken] = ‛\n["say","«speaker»«spoken»"],’
+speaker [speakerSpaces name] = ‛«speakerSpaces»«name»’
+speakerSpaces_spaces20 [spaces] = ‛                    ’
+speakerSpaces_tabtabspaces4 [tab1 tab2 spaces4] = ‛                    ’
+
+Coordinate [number1 kx number2] = ‛«number1»,«number2»’
+TimeSpan [kover number kframes] = ‛«number»’
+ChapterName [name] = ‛«name»’
+filename [name] = ‛«name»’
+
+spoken [cs+] = ‛«cs»’
+spokenchar [c] = ‛«c»’
+
+name [nameFirst nameRest*] = ‛«nameFirst»«nameRest»’
+nameFirst [letter] = ‛«letter»’
+nameRest [c] = ‛«c»’
+number [kminus? digit+] = ‛«kminus»«digit»’
+
+nls [cs+] = ‛’
+nl [c] = ‛«c»’
+tab [c] = ‛«c»’
+period [c] = ‛’
+separator [c] = ‛’
+}
+`;
+
