@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      textarea {
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Simplistic Transpile Tester</h1>
+
+    <button onclick="testbp ()">Test</button>
+    <br>
+
+    <p>source:</p>
+    <textarea id="src" rows="7" cols="90" placeholder="src" style="background-color:oldlace;">
+    </textarea>
+
+
+    <p>transpiled:</p>
+    <textarea id="output" rows="7" cols="90" placeholder="transpiled"  readonly style="background-color:whitesmoke;">
+    </textarea>
+    <br>
+    <br>
+    <p id="status" > READY </p>
+    <br>
+    <br>
+    <br>
+
+    <!-- Ohm-JS -->
+    <script src="https://unpkg.com/ohm-js@16/dist/ohm.min.js"></script>
+
+
+    <script src="fmt-js.js"></script>
+    <script src="transpile.js"></script>
+
+
+    <script>
+
+      const s = String.raw`ab`;
+      
+      const g = String.raw`
+Test {
+Main = A B
+A = "a"
+B = "b"
+}
+`;
+
+      const f = String.raw`
+Test {
+Main [A B] = ‛«B»«A»’
+A [k] = ‛«k»’
+B [k] = ‛«k»’
+}
+`;
+      const gn = "Test";
+      
+      function testbp () {
+	  document.getElementById('src').innerHTML = s;
+	  [success, transpiled, errormessage] = transpile (s, gn, g, f);
+	  if (success) {
+	      document.getElementById('output').value = transpiled;
+	      document.getElementById('status').innerHTML = "OK";
+	  } else {
+	      document.getElementById('output').value = transpiled;
+	      document.getElementById('status').innerHTML = "FAILED " + errormessage;
+	  }
+      }
+
+      
+    </script>
+  </body>
+</html>
+
+
+
