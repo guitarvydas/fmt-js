@@ -21,9 +21,9 @@ function transpile (src, grammarName, grammars, fmt) {
 	    //tracing = true;
 	    var generated = generatedFmtWalker._fmt ();
 	} catch (err) {
-	    return [false, generated];
+	    return [false, "", err.message];
 	}
-	return [true, generated];
+	return [true, generated, ""];
     }
 }
 
