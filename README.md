@@ -9,10 +9,10 @@ Meant to specify semantics for Ohm-JS grammars.
 3. Click "Generate JavaScript from FMT specification".
 4. Cut/paste the generated code from the output window ("equivalent JavaScript code") into your Ohm-JS project.
 
-## Transpile ()
+## Transpile () and a Sample Game Definition Language
 
 To test the transpile function...
-5. Load `tester.html` into a browser.
+5. Load `ghoststars/tester.html` into a browser.
 6. Click "Test small" button to see that everything has loaded and is working.
 7. Reload, click "Test Game Language (Ghost Stars)" button to convert a piece of a game script to JSON.
 
