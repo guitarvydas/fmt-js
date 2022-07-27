@@ -29,8 +29,6 @@ See source code strings in fmt-js.html `smallsrc`, `smallsrc2`, `smallsrc3` and 
 Note that the samples can be loaded by clicking on the appropriate "Use ..." buttons (see above).
 
 # Documentation
-...to follow (second part of langjam)
-
 https://publish.obsidian.md/programmingsimplicity/2022-07-24-FMT-JS+Documentation
 
 ## Philosophy
