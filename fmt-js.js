@@ -39,7 +39,7 @@ rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
-  | "«" name "»" -- eval
+  | "⟨" name "⟩" -- eval
   | ~"’" ~"]]" any     -- raw
 name = letter nameRest*
 nameRest = "_" | alnum
