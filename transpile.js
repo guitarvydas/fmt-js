@@ -22,8 +22,10 @@ function transpile (src, grammarName, grammars, fmt) {
             //tracing = true;
             var generated = generatedFmtWalker._fmt ();
         } catch (err) {
+	    throw 'this should return 3 values, not 2 - see branch dev';
             return [false, generated];
         }
+	throw 'this should return 3 values, not 2 - see branch dev';
         return [true, generated];
     }
 }
