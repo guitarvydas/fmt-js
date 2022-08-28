@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      textarea {
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Simplistic Transpile Tester</h1>
+
+    <button onclick="testsmall ()">Test small</button>
+    <button onclick="testgs ()">Test Game Language (Ghost Stars)</button>
+    <br>
+
+    <p>source:</p>
+    <textarea id="src" rows="7" cols="90" placeholder="src" style="background-color:oldlace;">
+    </textarea>
+
+
+    <p>transpiled:</p>
+    <textarea id="output" rows="7" cols="90" placeholder="transpiled"  readonly style="background-color:whitesmoke;">
+    </textarea>
+    <br>
+    <br>
+    <p id="status" > READY </p>
+    <br>
+    <br>
+    <br>
+
+    <!-- Ohm-JS -->
+    <script src="https://unpkg.com/ohm-js@16/dist/ohm.min.js"></script>
+
+
+    <script src="../fmt-js.js"></script>
+    <script src="../transpile.js"></script>
+
+
+    <script>
+
+      const smallsrc = String.raw`ab`;
+      
+      const smallgrammar = String.raw`
+Test {
+Main = A B
+A = "a"
+B = "b"
+}
+`;
+
+      const smallfmt = String.raw`
+Test {
+Main [A B] = ‛«B»«A»’
+A [k] = ‛«k»’
+B [k] = ‛«k»’
+}
+`;
+
+const ghostStarsSrc = String.raw`
+❖ Show prolog_bg at 0x-550. Move prolog_bg to 0x0
+over 300 frames. Wait 150 frames.
+
+		    CHEL:NA
+	  The last time I saw
+	  her... She was smiling. As
+	  if she had some secret that
+	  she couldn't wait to tell me.
+	  
+	  And then, in a sudden wash of
+	  red, she was gone.
+	  
+	  Gone as if she had never stood
+	  beneath the uncaring stars.
+
+❖ Fade to black over 43 frames. Jump INTRO.
+`;
+
+      const ghostStarsGrammar = String.raw`
+GhostStars {
+text = macro+
+
+macro = 
+  | applySyntactic<ShowPhrase>
+  | applySyntactic<MovePhrase>
+  | applySyntactic<WaitPhrase>
+  | applySyntactic<FadeToBlackPhrase>
+  | applySyntactic<JumpPhrase>
+  | lex_spoken
+  | period
+  | separator
+  | nls
+  | any
+  
+ShowPhrase = "Show" filename "at" Coordinate
+MovePhrase = "Move" filename "to" Coordinate TimeSpan
+WaitPhrase = "Wait" number "frames"
+FadeToBlackPhrase = "Fade" "to" "black" TimeSpan
+JumpPhrase = "Jump" ChapterName
+
+lex_spoken = speaker spoken
+
+speaker = speakerSpaces name
+speakerSpaces = 
+  | "                    " -- spaces20
+  | tab tab "    "         -- tabtabspaces4
+
+Coordinate = number "x" number
+TimeSpan = "over" number "frames"
+ChapterName = name
+filename = name
+
+spoken = spokenchar+
+spokenchar = ~separator any
+
+period = "."
+separator = "❖"
+
+name = nameFirst nameRest*
+nameFirst = letter
+nameRest = "_" | ":" | digit | nameFirst
+number = "-"? digit+
+
+nls = nl+
+nl = "\n"
+tab = "\t"
+}
+`;
+
+  const jsonfmt = String.raw`
+GhostStars {
+text [macro+] = ‛\n{ onenter:\n[«macro»true]\n}\n’
+
+macro [x] = ‛«x»’
+  
+ShowPhrase [kShow filename kat Coordinate] = ‛\n["image","«filename»",«Coordinate»],’
+MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","«filename»",«Coordinate»,«TimeSpan»,"ease in"],’
+WaitPhrase [kWait number kframes] = ‛\n["wait",«number»],’
+FadeToBlackPhrase [kFade kto kblack TimeSpan] = ‛\n["fadeout",«TimeSpan»],’
+JumpPhrase [kJump ChapterName] = ‛\n["jump","«ChapterName»"],’
+lex_spoken [speaker spoken] = ‛\n["say","«speaker»«spoken»"],’
+speaker [speakerSpaces name] = ‛«speakerSpaces»«name»’
+speakerSpaces_spaces20 [spaces] = ‛                    ’
+speakerSpaces_tabtabspaces4 [tab1 tab2 spaces4] = ‛                    ’
+
+Coordinate [number1 kx number2] = ‛«number1»,«number2»’
+TimeSpan [kover number kframes] = ‛«number»’
+ChapterName [name] = ‛«name»’
+filename [name] = ‛«name»’
+
+spoken [cs+] = ‛«cs»’
+spokenchar [c] = ‛«c»’
+
+name [nameFirst nameRest*] = ‛«nameFirst»«nameRest»’
+nameFirst [letter] = ‛«letter»’
+nameRest [c] = ‛«c»’
+number [kminus? digit+] = ‛«kminus»«digit»’
+
+nls [cs+] = ‛’
+nl [c] = ‛«c»’
+tab [c] = ‛«c»’
+period [c] = ‛’
+separator [c] = ‛’
+}
+`;
+
+      function test (src, grammarName, grammar, fmt) {
+	  document.getElementById('src').innerHTML = src;
+	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt);
+	  if (success) {
+	      document.getElementById('output').value = transpiled;
+	      document.getElementById('status').innerHTML = "OK";
+	  } else {
+	      document.getElementById('output').value = transpiled;
+	      document.getElementById('status').innerHTML = "FAILED " + errormessage;
+	  }
+      }
+
+      function testsmall () {
+	  test (smallsrc, "Test", smallgrammar, smallfmt);
+      }
+
+      function testgs () {
+	  test (ghostStarsSrc, "GhostStars", ghostStarsGrammar, jsonfmt);
+      }
+
+      
+    </script>
+  </body>
+</html>
+
+
+

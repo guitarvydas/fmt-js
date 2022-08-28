@@ -1,3 +1,4 @@
+// return 3 item from transpile
 function transpile (src, grammarName, grammars, fmt) {
     [matchsuccess, grammar, cst, errormessage] = patternmatch (src, grammarName, grammars);
     if (!matchsuccess) {
