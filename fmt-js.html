@@ -46,7 +46,7 @@ textarea {
 const smallsrc = String.raw`
 Test {
 //
-Rule1 [x] = ‛«x»’
+Rule1 [x] = ‛⟨x⟩’
 //
 }
 `;
@@ -54,17 +54,17 @@ Rule1 [x] = ‛«x»’
   const smallsrc2 = String.raw`
 Test {
 //
-Rule1 [x] = ‛«x»’
-Rule2 [x+] = ‛«x»’
+Rule1 [x] = ‛⟨x⟩’
+Rule2 [x+] = ‛⟨x⟩’
 //
 }
 `;
   const smallsrc3 = String.raw`
 Test {
 //
-Rule1 [x] = ‛«x»’
-Rule2 [x+] = ‛«x»’
-Rule3 [a+ b* c? d] = ‛«a»«b»«c»«d»’
+Rule1 [x] = ‛⟨x⟩’
+Rule2 [x+] = ‛⟨x⟩’
+Rule3 [a+ b* c? d] = ‛⟨a⟩⟨b⟩⟨c⟩⟨d⟩’
 //
 }
 `;
@@ -72,40 +72,40 @@ Rule3 [a+ b* c? d] = ‛«a»«b»«c»«d»’
 
   const bigsrc = String.raw`
 Test {
-TopLevel [x+] = ‛«x»’
-ConstDeclaration [kconst ident kto expression] = ‛\nconst «ident» = «expression»;’
-FunctionDeclaration [kfn ident Formals Block] = ‛\nfunction «ident» («Formals») {«Block»\n’
+TopLevel [x+] = ‛⟨x⟩’
+ConstDeclaration [kconst ident kto expression] = ‛\nconst ⟨ident⟩ = ⟨expression⟩;’
+FunctionDeclaration [kfn ident Formals Block] = ‛\nfunction ⟨ident⟩ (⟨Formals⟩) {⟨Block⟩\n’
 
-Formals [ident*] = ‛«ident»’
+Formals [ident*] = ‛⟨ident⟩’
 
-Primary_number [digit+] = ‛«digits»’
-Primary_arrayliteral [karr Expressions kend] = ‛\[«Expressions»\] ’
+Primary_number [digit+] = ‛⟨digits⟩’
+Primary_arrayliteral [karr Expressions kend] = ‛\[⟨Expressions⟩\] ’
 
-Expression_fieldaccess [e1 op e2] = ‛«e1».«e2»’
-Expression_operation [e1 op e2] = ‛«e1» «op» «e2»’
-Expression_functioncall [e1 kcall Actuals* kend] = ‛«e1» («Actuals»)’
-Expression_primary [Primary] = ‛«Primary»’
+Expression_fieldaccess [e1 op e2] = ‛⟨e1⟩.⟨e2⟩’
+Expression_operation [e1 op e2] = ‛⟨e1⟩ ⟨op⟩ ⟨e2⟩’
+Expression_functioncall [e1 kcall Actuals* kend] = ‛⟨e1⟩ (⟨Actuals⟩)’
+Expression_primary [Primary] = ‛⟨Primary⟩’
 
 Operator_subtract [k] = ‛-’
 Operator_add [k] = ‛+’
 Operator_gt [k] = ‛ > ’
 
-Phrase [x] = ‛«x»’
+Phrase [x] = ‛⟨x⟩’
 
-IfPhrase [kif Expression Block elsifphrase? elsephrase?] = ‛\nif («Expression») {«Block»\n«elsifphrase»«elsephrase»’
-ElsifPhrase [kelse kif Expression Block] = ‛\nelse if («Expression») {«Block»\n’
-ElsePhrase [kelse Block] = ‛\nelse {«Block»\n’
-ReturnPhrase [kreturn Expression] = ‛\nreturn «Expression»;’
+IfPhrase [kif Expression Block elsifphrase? elsephrase?] = ‛\nif (⟨Expression⟩) {⟨Block⟩\n⟨elsifphrase⟩⟨elsephrase⟩’
+ElsifPhrase [kelse kif Expression Block] = ‛\nelse if (⟨Expression⟩) {⟨Block⟩\n’
+ElsePhrase [kelse Block] = ‛\nelse {⟨Block⟩\n’
+ReturnPhrase [kreturn Expression] = ‛\nreturn ⟨Expression⟩;’
 
-Block [kdo Phrase+ kend] = ‛«Phrase»’
+Block [kdo Phrase+ kend] = ‛⟨Phrase⟩’
 
-FieldName [ident] = ‛«ident»’
+FieldName [ident] = ‛⟨ident⟩’
 
-ident [identFirst identRest*] = ‛«identFirst»«identRest»’
-identFirst [c] = ‛«c»’
-identRest [c] = ‛«c»’
+ident [identFirst identRest*] = ‛⟨identFirst⟩⟨identRest⟩’
+identFirst [c] = ‛⟨c⟩’
+identRest [c] = ‛⟨c⟩’
 
-NonemptyListOf [x xs+ cs+] = ‛«x»«xs»«cs»’
+NonemptyListOf [x xs+ cs+] = ‛⟨x⟩⟨xs⟩⟨cs⟩’
 }
 `;
 
