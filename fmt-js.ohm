@@ -1,14 +1,10 @@
 FMT {
-top = rule+ spaces
+top = spaces name spaces "{" rule+ "}" spaces
 rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
-rewriteString =
-  | stringBegin char* stringEnd
-stringBegin = "‛" | "[["
-stringEnd = "’" | "]]"
+rewriteString = "‛" char* "’" spaces
 char =
-  | "«" name "»" -- eval
-  | "$" name     -- evalShorthand
+  | "⟨" name "⟩" -- eval
   | ~"’" ~"]]" any     -- raw
 name = letter nameRest*
 nameRest = "_" | alnum
@@ -17,4 +13,6 @@ Param =
   | name "*" -- star
   | name "?" -- opt
   | name     -- flat
+comment = "//" (~"\n" any)* "\n"
+space += comment
 }
