@@ -34,7 +34,8 @@ var traceDepth = 0;
 const fmtGrammar =
       String.raw`
 FMT {
-top = spaces name spaces "{" rule+ "}" spaces
+top = spaces name spaces "{" rule+ "}" spaces more*
+more = name spaces "{" rule+ "}" spaces
 rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
@@ -80,7 +81,7 @@ var varNameStack = [];
 
 const semObject = {
 
-    top : function (_ws1,_name,_ws2,_lb,_rule,_rb,_ws3) { 
+    top : function (_ws1,_name,_ws2,_lb,_rule,_rb,_ws3,_more) { 
         _ruleEnter ("top");
 
         var ws1 = _ws1._fmt ();
@@ -90,13 +91,30 @@ const semObject = {
         var rule = _rule._fmt ().join ('');
         var rb = _rb._fmt ();
         var ws3 = _ws3._fmt ();
+        var more = _more._fmt ();
         var _result = `{
-${rule}
+${rule}${more}
     _terminal: function () { return this.sourceString; },
     _iter: function (...children) { return children.map(c => c._fmt ()); },
     spaces: function (x) { return this.sourceString; },
     space: function (x) { return this.sourceString; }
 }
+`; 
+        _ruleExit ("top");
+        return _result; 
+    },
+
+    more : function (_name,_ws2,_lb,_rule,_rb,_ws3) { 
+        _ruleEnter ("top");
+
+        var name = _name._fmt ();
+        var ws2 = _ws2._fmt ();
+        var lb = _lb._fmt ();
+        var rule = _rule._fmt ().join ('');
+        var rb = _rb._fmt ();
+        var ws3 = _ws3._fmt ();
+        var _result = `
+${rule}
 `; 
         _ruleExit ("top");
         return _result; 
