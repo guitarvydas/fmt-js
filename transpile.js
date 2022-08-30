@@ -51,6 +51,11 @@ function patternmatch (src, grammarName, grammars) {
     } catch (err) {
         return [false, undefined, undefined, err.message];
     }
-    return [true, grammar, cst, ""];
+    if (cst.failed ()) {
+	return [false, grammar, cst, cst.message];
+    } else { 
+	return [true, grammar, cst, ""];
+    }
+	
 }
 

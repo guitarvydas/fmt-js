@@ -39,8 +39,9 @@ rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
-  | "⟨" name "⟩" -- eval
+  | "⟨" nonBracketChar* "⟩" -- eval
   | ~"’" ~"]]" any     -- raw
+nonBracketChar = ~"⟩" ~"⟨"  ~"’" ~"]]" any
 name = letter nameRest*
 nameRest = "_" | alnum
 Param =
@@ -162,11 +163,11 @@ _ruleExit ("${getRuleName ()}");
     ////
     // char_eval [lb name rb] = [[\$\{${name}\}]]
     // char_raw [c] = [[${c}]]
-    char_eval : function (_lb,_name,_rb) { 
+    char_eval : function (_lb,_cs,_rb) { 
         _ruleEnter ("char_eval");
 
         var lb = _lb._fmt ();
-        var name = _name._fmt ();
+        var name = _cs._fmt ().join ('');
         var rb = _rb._fmt ();
         var _result = `\$\{${name}\}`; 
         _ruleExit ("char_eval");
