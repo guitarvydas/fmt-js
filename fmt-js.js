@@ -34,8 +34,8 @@ var traceDepth = 0;
 const fmtGrammar =
       String.raw`
 FMT {
-top = spaces name spaces "{" rule+ "}" spaces more*
-more = name spaces "{" rule+ "}" spaces
+top = spaces name spaces "{" spaces rule+ spaces "}" spaces more*
+more = name spaces "{" spaces rule* spaces "}" spaces
 rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
@@ -69,8 +69,8 @@ var varNameStack = [];
 
 // xxx
 
-//// top = spaces name spaces "{" rule+ "}" spaces
-// top [ws1 name ws2 lb @rule rb ws3] = [[{
+//// top = spaces name spaces "{" spaces rule+ spaces "}" spaces more*
+// top [ws1 name ws2 lb ws4 @rule ws5 rb ws3 @more] = [[{
 // ${rule}
     // _terminal: function () { return this.sourceString; },
     // _iter: function (...children) { return children.map(c => c._fmt ()); },
@@ -81,17 +81,19 @@ var varNameStack = [];
 
 const semObject = {
 
-    top : function (_ws1,_name,_ws2,_lb,_rule,_rb,_ws3,_more) { 
+    top : function (_ws1,_name,_ws2,_lb,_ws4,_rule,_ws5,_rb,_ws3,_more) { 
         _ruleEnter ("top");
 
         var ws1 = _ws1._fmt ();
         var name = _name._fmt ();
         var ws2 = _ws2._fmt ();
         var lb = _lb._fmt ();
+        var ws4 = _ws4._fmt ();
         var rule = _rule._fmt ().join ('');
+        var ws5 = _ws5._fmt ();
         var rb = _rb._fmt ();
         var ws3 = _ws3._fmt ();
-        var more = _more._fmt ();
+        var more = _more._fmt ().join ('');
         var _result = `{
 ${rule}${more}
     _terminal: function () { return this.sourceString; },
@@ -104,13 +106,15 @@ ${rule}${more}
         return _result; 
     },
 
-    more : function (_name,_ws2,_lb,_rule,_rb,_ws3) { 
+    more : function (_name,_ws2,_lb,_ws4,_rule,_ws5,_rb,_ws3) { 
         _ruleEnter ("top");
 
         var name = _name._fmt ();
         var ws2 = _ws2._fmt ();
         var lb = _lb._fmt ();
+        var ws4 = _ws4._fmt ();
         var rule = _rule._fmt ().join ('');
+        var ws5 = _ws5._fmt ();
         var rb = _rb._fmt ();
         var ws3 = _ws3._fmt ();
         var _result = `
