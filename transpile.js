@@ -1,12 +1,12 @@
 // return 3 item from transpile
 function transpile (src, grammarName, grammars, fmt) {
-    [matchsuccess, grammar, cst, errormessage] = patternmatch (src, grammarName, grammars);
+    [matchsuccess, trgrammar, cst, errormessage] = patternmatch (src, grammarName, grammars);
     if (!matchsuccess) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
 	[success, semanticsFunctionsAsString] = fmtjs (fmt);
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
-	var sem = grammar.createSemantics ();
+	var sem = trgrammar.createSemantics ();
 	try {
 	    semobj = eval (evalableSemanticsFunctions);
 	} catch (err) {
@@ -36,23 +36,23 @@ function patternmatch (src, grammarName, grammars) {
 	return [false, undefined, undefined, err.message];
     }
     try {
-	var grammar = grammarSpecs [grammarName];
+	var pmgrammar = grammarSpecs [grammarName];
     } catch (err) {
 	return [false, undefined, undefined, `grammar ${grammarName} not found in given grammars`];
     }
-    if (grammar === undefined) {
+    if (pmgrammar === undefined) {
 	return [false, undefined, undefined, `grammar '${grammarName}' not found in given grammars`];
     }
 
     try {
-	var cst = grammar.match (src);
+	var cst = pmgrammar.match (src);
     } catch (err) {
 	return [false, undefined, undefined, err.message];
     }
     if (cst.failed ()) {
-	return [false, grammar, cst, cst.message];
+	return [false, pmgrammar, cst, cst.message];
     } else { 
-	return [true, grammar, cst, ""];
+	return [true, pmgrammar, cst, ""];
     }
 	
 }
