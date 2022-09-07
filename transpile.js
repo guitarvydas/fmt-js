@@ -15,7 +15,7 @@ function transpile (src, grammarName, grammars, fmt) {
 	try {
 	    sem.addOperation ("_fmt", semobj);
 	} catch (err) {
-	    return [false, null, "error in .fmt specifcation<br><br>" + err.message];
+	    return [false, null, "error in .fmt specification<br><br>" + err.message];
 	}
         var generatedFmtWalker = sem (cst);
         try {
