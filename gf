@@ -26,7 +26,7 @@ function main (srcFilename, grammarName, grammarsFilename, fmtspecFilename) {
     console.log (src);
     console.log (grammars);
     
-    //result = transpiler.transpile (src, grammarName, grammars, fmt, ohm);
+    result = transpiler.transpile (src, grammarName, grammars, fmt, ohm, fmtcompiler.compilefmt);
     // console.log (result);
     console.log ('ok');
 }

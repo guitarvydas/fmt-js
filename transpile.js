@@ -1,10 +1,10 @@
 // return 3 item from transpile
-function transpile (src, grammarName, grammars, fmt, ohmlang) {
+function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
     [matchsuccess, trgrammar, cst, errormessage] = patternmatch (src, grammarName, grammars, ohmlang);
     if (!matchsuccess) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
-	[success, semanticsFunctionsAsString] = fmtjs (fmt);
+	[success, semanticsFunctionsAsString] = compfmt (fmt, ohmlang);
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
 	var sem = trgrammar.createSemantics ();
 	try {
