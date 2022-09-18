@@ -10,26 +10,21 @@ var transpiler = require ('./transpile.js');
 function main (srcFilename, grammarName, grammarsFilename, fmtspecFilename) {
     var result;
 
-    console.log (srcFilename);
-    console.log (grammarName);
-    console.log (grammarsFilename);
-    console.log (fmtspecFilename);
-    
     var fmtspec = fs.readFileSync (path.resolve(__dirname, fmtspecFilename), 'UTF-8');
     var fmt = fmtcompiler.compilefmt (fmtspec, ohm);
-    console.log (fmt);
 
     var src = fs.readFileSync (path.resolve(__dirname, srcFilename), 'UTF-8');
 
     var grammars = fs.readFileSync (path.resolve(__dirname, grammarsFilename), 'UTF-8');
     
-    console.log (src);
-    console.log (grammars);
-    console.log (fmtspec);
+    var success;
+    var transpiled;
+    var errormessage;
     
-    result = transpiler.transpile (src, grammarName, grammars, fmtspec, ohm, fmtcompiler.compilefmt);
-    console.log (result);
-    console.log ('ok');
+    [success, transpiled, errormessage] = transpiler.transpile (src, grammarName, grammars, fmtspec, ohm, fmtcompiler.compilefmt);
+    console.log (success);
+    console.log (transpiled);
+    console.log (errormessage);
 }
 
 var av = process.argv;
