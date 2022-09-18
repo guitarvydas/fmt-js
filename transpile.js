@@ -57,3 +57,4 @@ function patternmatch (src, grammarName, grammars, ohmlang) {
 	
 }
 
+exports.transpile = transpile
