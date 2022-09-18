@@ -1,4 +1,50 @@
-function fmtjs (fmtsrc) {
+/// helpers
+function _ruleInit () {
+}
+
+function traceSpaces () {
+    var s = '';
+    var n = traceDepth;
+    while (n > 0) {
+        s += ' ';
+        n -= 1;
+    }
+    s += `[${traceDepth.toString ()}]`;
+    return s;
+}
+
+function _ruleEnter (ruleName) {
+    if (tracing) {
+        traceDepth += 1;
+        var s = traceSpaces ();
+        s += 'enter: ';
+        s += ruleName.toString ();
+        console.log (s);
+    }
+}
+
+function _ruleExit (ruleName) {
+    if (tracing) {
+        var s = traceSpaces ();
+        traceDepth -= 1;
+        s += 'exit: ';
+        s += ruleName.toString ();
+        console.log (s);
+    }
+}
+
+function getFmtGrammar () {
+    return fmtGrammar;
+}
+
+  // helper functions
+  var ruleName = "???";
+  function setRuleName (s) { ruleName = s; return "";}
+  function getRuleName () { return ruleName; }
+
+/// end helpers
+
+function compilefmt (fmtsrc, ohmlang) {
     // expand the string fmtsrc into JavaScript suitable for
     // inclusion as a semantic object for Ohm.js
     //
@@ -8,7 +54,7 @@ function fmtjs (fmtsrc) {
     
 
     // Step 1a. Create (internal) fmt transpiler. 
-    var internalgrammar = ohm.grammar (fmtGrammar);
+    var internalgrammar = ohmlang.grammar (fmtGrammar);
     var fmtcst = internalgrammar.match (fmtsrc);
 
     if (fmtcst.failed ()) {
@@ -285,47 +331,4 @@ _ruleExit ("${getRuleName ()}");
 };
 // yyy
 
-function _ruleInit () {
-}
-
-function traceSpaces () {
-    var s = '';
-    var n = traceDepth;
-    while (n > 0) {
-        s += ' ';
-        n -= 1;
-    }
-    s += `[${traceDepth.toString ()}]`;
-    return s;
-}
-
-function _ruleEnter (ruleName) {
-    if (tracing) {
-        traceDepth += 1;
-        var s = traceSpaces ();
-        s += 'enter: ';
-        s += ruleName.toString ();
-        console.log (s);
-    }
-}
-
-function _ruleExit (ruleName) {
-    if (tracing) {
-        var s = traceSpaces ();
-        traceDepth -= 1;
-        s += 'exit: ';
-        s += ruleName.toString ();
-        console.log (s);
-    }
-}
-
-function getFmtGrammar () {
-    return fmtGrammar;
-}
-
-  // helper functions
-  var ruleName = "???";
-  function setRuleName (s) { ruleName = s; return "";}
-  function getRuleName () { return ruleName; }
-
-
+exports.compilefmt = compilefmt
