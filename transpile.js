@@ -4,7 +4,7 @@ function transpile (src, grammarName, grammars, fmt) {
     if (!matchsuccess) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
-	[success, semanticsFunctionsAsString] = fmtjs (fmt);
+	[success, semanticsFunctionsAsString] = compilefmt (fmt);
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
 	var sem = trgrammar.createSemantics ();
 	try {

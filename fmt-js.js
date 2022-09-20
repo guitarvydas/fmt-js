@@ -1,4 +1,4 @@
-function fmtjs (fmtsrc) {
+function compilefmt (fmtsrc) {
     // expand the string fmtsrc into JavaScript suitable for
     // inclusion as a semantic object for Ohm.js
     //
