@@ -1,4 +1,4 @@
-function compilefmt (fmtsrc) {
+function compilefmt (fmtsrc, ohmlib) {
     // expand the string fmtsrc into JavaScript suitable for
     // inclusion as a semantic object for Ohm.js
     //
@@ -8,7 +8,7 @@ function compilefmt (fmtsrc) {
     
 
     // Step 1a. Create (internal) fmt transpiler. 
-    var internalgrammar = ohm.grammar (fmtGrammar);
+    var internalgrammar = ohmlib.grammar (fmtGrammar);
     var fmtcst = internalgrammar.match (fmtsrc);
 
     if (fmtcst.failed ()) {
