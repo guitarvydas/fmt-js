@@ -126,7 +126,7 @@ NonemptyListOf [x xs+ cs+] = ‛⟨x⟩⟨xs⟩⟨cs⟩’
   function generate () {
       var src = document.getElementById('src').value;
       try {
-          let [success, transpiled] = fmtjs (src);
+          let [success, transpiled] = compilefmt (src, ohm);
           document.getElementById('output').value = transpiled;
           if (success) {
               document.getElementById('status').innerHTML = "OK";
