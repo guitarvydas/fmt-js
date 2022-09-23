@@ -5,12 +5,17 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
     } else {
 	[success, semanticsFunctionsAsString] = compfmt (fmt, ohmlang);
+	if (!success) {
+	    return [false, null, 'error compiling .fmt specification<br><br>' + err.message + ' ' + semanticsFunctionsAsString];
+	}
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
 	var sem = trgrammar.createSemantics ();
 	try {
 	    semobj = eval (evalableSemanticsFunctions);
 	} catch (err) {
-	    return [false, null, 'error compiling .fmt specification<br><br>' + err.message + ' ' + semanticsFunctionsAsString];
+	    console.error (evalableSemanticsFunctions);
+	    console.error (fmt);
+	    return [false, null, 'error evaling .fmt specification<br><br>' + err.message];
 	}
 	try {
 	    sem.addOperation ("_fmt", semobj);
@@ -57,7 +62,6 @@ function patternmatch (src, grammarName, grammars, ohmlang) {
 	
 }
 
-exports.transpile = transpile
 
 /// helpers
 var tracing = false;
