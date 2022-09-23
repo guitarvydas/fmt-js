@@ -58,7 +58,9 @@ function compilefmt (fmtsrc, ohmlang) {
     var fmtcst = internalgrammar.match (fmtsrc);
 
     if (fmtcst.failed ()) {
-        return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification (grammar: fmt.ohm))\n\n" + internalgrammar.trace (fmtsrc)];
+        // return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification (grammar: fmt.ohm))\n\n" + internalgrammar.trace (fmtsrc)];
+	console.error (internalgrammar);
+        return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification (grammar: fmt.ohm)) rightmostPosition=" + fmtcst.getRightmostFailurePosition()];
     }
     // Step 1b. Transpile User's FMT spec to a JS object (for use with Ohm-JS)
     try {
@@ -331,4 +333,3 @@ _ruleExit ("${getRuleName ()}");
 };
 // yyy
 
-exports.compilefmt = compilefmt
