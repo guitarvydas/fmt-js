@@ -88,9 +88,9 @@ rule = applySyntactic<RuleLHS> spaces "=" spaces rewriteString
 RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
-  | "⟨" nonBracketChar* "⟩" -- eval
+  | "«" nonBracketChar* "»" -- eval
   | ~"’" ~"]]" any     -- raw
-nonBracketChar = ~"⟩" ~"⟨"  ~"’" ~"]]" any
+nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
 name = letter nameRest*
 nameRest = "_" | alnum
 Param =
