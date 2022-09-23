@@ -1,3 +1,6 @@
+⟨
+⟩
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -51,9 +54,9 @@ B = "b"
 
       const smallfmt = String.raw`
 Test {
-Main [A B] = ‛«B»«A»’
-A [k] = ‛«k»’
-B [k] = ‛«k»’
+Main [A B] = ‛⟨B⟩⟨A⟩’
+A [k] = ‛⟨k⟩’
+B [k] = ‛⟨k⟩’
 }
 `;
 
@@ -129,36 +132,36 @@ tab = "\t"
 
   const jsonfmt = String.raw`
 GhostStars {
-text [macro+] = ‛\n{ onenter:\n[«macro»true]\n}\n’
+text [macro+] = ‛\n{ onenter:\n[⟨macro⟩true]\n}\n’
 
-macro [x] = ‛«x»’
+macro [x] = ‛⟨x⟩’
   
-ShowPhrase [kShow filename kat Coordinate] = ‛\n["image","«filename»",«Coordinate»],’
-MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","«filename»",«Coordinate»,«TimeSpan»,"ease in"],’
-WaitPhrase [kWait number kframes] = ‛\n["wait",«number»],’
-FadeToBlackPhrase [kFade kto kblack TimeSpan] = ‛\n["fadeout",«TimeSpan»],’
-JumpPhrase [kJump ChapterName] = ‛\n["jump","«ChapterName»"],’
-lex_spoken [speaker spoken] = ‛\n["say","«speaker»«spoken»"],’
-speaker [speakerSpaces name] = ‛«speakerSpaces»«name»’
+ShowPhrase [kShow filename kat Coordinate] = ‛\n["image","⟨filename⟩",⟨Coordinate⟩],’
+MovePhrase [kMove filename kto Coordinate TimeSpan] = ‛\n["moveto","⟨filename⟩",⟨Coordinate⟩,⟨TimeSpan⟩,"ease in"],’
+WaitPhrase [kWait number kframes] = ‛\n["wait",⟨number⟩],’
+FadeToBlackPhrase [kFade kto kblack TimeSpan] = ‛\n["fadeout",⟨TimeSpan⟩],’
+JumpPhrase [kJump ChapterName] = ‛\n["jump","⟨ChapterName⟩"],’
+lex_spoken [speaker spoken] = ‛\n["say","⟨speaker⟩⟨spoken⟩"],’
+speaker [speakerSpaces name] = ‛⟨speakerSpaces⟩⟨name⟩’
 speakerSpaces_spaces20 [spaces] = ‛                    ’
 speakerSpaces_tabtabspaces4 [tab1 tab2 spaces4] = ‛                    ’
 
-Coordinate [number1 kx number2] = ‛«number1»,«number2»’
-TimeSpan [kover number kframes] = ‛«number»’
-ChapterName [name] = ‛«name»’
-filename [name] = ‛«name»’
+Coordinate [number1 kx number2] = ‛⟨number1⟩,⟨number2⟩’
+TimeSpan [kover number kframes] = ‛⟨number⟩’
+ChapterName [name] = ‛⟨name⟩’
+filename [name] = ‛⟨name⟩’
 
-spoken [cs+] = ‛«cs»’
-spokenchar [c] = ‛«c»’
+spoken [cs+] = ‛⟨cs⟩’
+spokenchar [c] = ‛⟨c⟩’
 
-name [nameFirst nameRest*] = ‛«nameFirst»«nameRest»’
-nameFirst [letter] = ‛«letter»’
-nameRest [c] = ‛«c»’
-number [kminus? digit+] = ‛«kminus»«digit»’
+name [nameFirst nameRest*] = ‛⟨nameFirst⟩⟨nameRest⟩’
+nameFirst [letter] = ‛⟨letter⟩’
+nameRest [c] = ‛⟨c⟩’
+number [kminus? digit+] = ‛⟨kminus⟩⟨digit⟩’
 
 nls [cs+] = ‛’
-nl [c] = ‛«c»’
-tab [c] = ‛«c»’
+nl [c] = ‛⟨c⟩’
+tab [c] = ‛⟨c⟩’
 period [c] = ‛’
 separator [c] = ‛’
 }
@@ -166,7 +169,7 @@ separator [c] = ‛’
 
       function test (src, grammarName, grammar, fmt) {
 	  document.getElementById('src').innerHTML = src;
-	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt);
+	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, compilefmt);
 	  if (success) {
 	      document.getElementById('output').value = transpiled;
 	      document.getElementById('status').innerHTML = "OK";
