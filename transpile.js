@@ -6,7 +6,8 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
     } else {
 	[success, semanticsFunctionsAsString] = compfmt (fmt, ohmlang);
 	if (!success) {
-	    return [false, null, 'error compiling .fmt specification<br><br>' + err.message + ' ' + semanticsFunctionsAsString];
+	    var errorMessage = semanticsFunctionsAsString
+	    return [false, null, errorMessage];
 	}
 	var evalableSemanticsFunctions = '(' + semanticsFunctionsAsString + ')';
 	var sem = trgrammar.createSemantics ();
