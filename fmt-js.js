@@ -60,7 +60,7 @@ function compilefmt (fmtsrc, ohmlang) {
     if (fmtcst.failed ()) {
         // return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification (grammar: fmt.ohm))\n\n" + internalgrammar.trace (fmtsrc)];
 	console.error (internalgrammar);
-        return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification (grammar: fmt.ohm)) rightmostPosition=" + fmtcst.getRightmostFailurePosition()];
+        return [false, "FORMAT: syntax error\n(Use Ohm-Editor to debug format specification) rightmostPosition=" + fmtcst.getRightmostFailurePosition() + '\n' + fmtsrc];
     }
     // Step 1b. Transpile User's FMT spec to a JS object (for use with Ohm-JS)
     try {
