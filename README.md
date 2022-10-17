@@ -1,4 +1,3 @@
-test from parallels
 # FMT-JS
 A language to help in building textual programming languages.
 
@@ -68,3 +67,6 @@ I strongly recommend using Ohm-Editor and Ohm-JS for grammar development.
 The grammar for the "big test" is based on parsing a snippet of code in WrittenScript](https://github.com/KinectTheUnknown/WrittenScript) discussed in the Discord [ohmland](https://discord.com/channels/779282197152661525/779286160597319680/992714506033692692)
 
 The source code for the Ghost Stars test is a snippet from [Ghost Stars](https://oofoe.itch.io/ghost-stars).
+
+# Revision
+test from parallels
