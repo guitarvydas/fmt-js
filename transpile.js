@@ -1,5 +1,13 @@
 // return 3 item from transpile
+function vtranspile (v) {
+    // v is { tracing: boolean, traceDepth: int, src: String, grammarName: String, grammars: String, fmt : String, ohm: function, compilefmt: function}
+    tracing = v.tracing;
+    traceDepth = v.traceDepth;
+    return transpile (v.src, v.grammarName, v.grammars, v.fmt, v.ohm, v.compilefmt);
+}
+
 function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
+    
     [matchsuccess, trgrammar, cst, errormessage] = patternmatch (src, grammarName, grammars, ohmlang);
     if (!matchsuccess) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];

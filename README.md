@@ -1,72 +1,61 @@
 # FMT-JS
-A language to help in building textual programming languages.
+A library to help in building textual programming languages.
 
-Meant to specify semantics for Ohm-JS grammars.
+Matches input source and fabricates a new string from it.
 
 # Usage
-1. Load `fmt-js.html` into a browser (I use Chrome)
-2. Click on one of the "Use ... test" buttons to populate the source text area, or, enter your own code.
-3. Click "Generate JavaScript from FMT specification".
-4. Cut/paste the generated code from the output window ("equivalent JavaScript code") into your Ohm-JS project.
+This is a JavaScript library function.  Call the API.
 
-## Transpile ()
+# API
+## Transpile
+`[success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, compilefmt)`
 
-To test the transpile function...
-5. Load `tester.html` into a browser.
-6. Click "Test small" button to see that everything has loaded and is working.
-7. Reload, click "Test Game Language (Ghost Stars)" button to convert a piece of a game script to JSON.
+Match *src* and fabricate a new source string from it.  AKA "transpilation".
+
+Transpile *src* using the grammar and the *fmt* fabrication specification.  
+1. First, it compiles *fmt* to an internal form[^int] for use with Ohm-JS.
+2. Second, *src* is pattern-matched ("parsed") against the given *grammar* with name *grammarName*.  *GrammarName* is a simple string. The *grammar* is a string containing Ohm-JS DSL rules.
+3. Third, the fabrication rules are applied to the pattern match ("CST" - Concrete Syntax Tree)
+4. Fabrication produces a single string.  That string is returned in the variable *transpiled*.
+Note tht
+
+[^int]: The internal form is JavaScript code.  See Ohm-JS documentation for the full glory of what can be specified here.  *Fmt* is a restricted syntax that is meant only for creating strings.  Ohm-JS semantics, expressed as JavaScript can do much more than this.
+
+- success - return value - boolean true if no errors
+
+- *ohm* is a function - it must be the function supplied by Ohm-JS 
+- *compilefmt* is a function - it must be the function supplied by *fmt-js.js*
+
+The two functions - *ohm* and *compilefmt* - must be passed into the *transpile* function because of the differences between JavaScript and node.js (`src` element vs `require`) that make it impossible to write *transpile* in a generic manner.
+
+## HTML
+To load the required functions in a .HTML file, use the following code:
+```
+<!-- Ohm-JS -->
+<script src="https://unpkg.com/ohm-js@16/dist/ohm.min.js"></script>
 
 
-# Beautiful Assembler
+<!-- Transpiler -->
+<script src="fmt-js/fmt-js.js"></script>
+<script src="fmt-js/transpile.js"></script>
 
-> ~31:50 "In a 'real' Computer Science, the best languages of an era should serve as 'assembly code' for the next generation of expression.
+...
+	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, compilefmt);
+...
+```
 
-[https://www.youtube.com/watch?v=fhOHn9TClXY&t=859s](https://www.youtube.com/watch?v=fhOHn9TClXY&t=859s)
+Where *src*, *grammarName*, *grammar*, and, *fmt* depend on the application.
 
-# Sample Files Written in FMT-JS
-See source code strings in fmt-js.html `smallsrc`, `smallsrc2`, `smallsrc3` and `bigtest`.
+Where *ohm*, and, *compilefmt* are used literally as-is.
 
-Note that the samples can be loaded by clicking on the appropriate "Use ..." buttons (see above).
+## Node.js
+To load the required functions in a node.js program, use the following code:
 
-# Documentation
-...to follow (second part of langjam)
-
-https://publish.obsidian.md/programmingsimplicity/2022-07-24-FMT-JS+Documentation
-
-## Philosophy
-Treat SCNs like bowls of candy.
-
-Bolt Ohm-JS + Fmt-JS together --> transpile SCN-source-code to executable code.
-
-(SCN == mini-DSL ; Solution Centric Notation).
-
-# N.B.
-
-The output is Javascript, meant to be bolted into an Ohm-JS project.
-
-The output Javascript is not neatly formatted.  I emphasize machine-readability-writability over human-readability.
-
-Human readability can be achieved by grinding the output through a pretty-printer (I currently use emacs' "indent-region" command).
-
-# Other Languages, C++, Python, Rust, JSON, Etc
-Ohm-JS and Fmt-JS happen to be written in Javascript, but, they implement an new DSL (an SCN for parsing).
-
-It should be possible to generate code for any other textual language using Ohm-JS and Fmt-JS.
-
-(In fact, I have generated Python and JSON and Common Lisp code using Ohm-JS).
-
-# Contrib
-I would enjoy handing this off to anyone who wants to understand it and clean it up.
-
-# Ohm-JS and Ohm-Editor
-I strongly recommend using Ohm-Editor and Ohm-JS for grammar development.
-[ohm-js](https://ohmjs.org/)
-[ohm-editor](https://ohmjs.org/editor/)
-
-# Acknowledgements
-The grammar for the "big test" is based on parsing a snippet of code in WrittenScript](https://github.com/KinectTheUnknown/WrittenScript) discussed in the Discord [ohmland](https://discord.com/channels/779282197152661525/779286160597319680/992714506033692692)
-
-The source code for the Ghost Stars test is a snippet from [Ghost Stars](https://oofoe.itch.io/ghost-stars).
-
-# Revision
-test from parallels
+```
+const ohm = require ('ohm-js');
+const fmt = require ('fmt-js/fmt-js.js');
+const transpiler = require ('fmt-js/transpile.js')
+...
+	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, fmt.compilefmt);
+...
+```
