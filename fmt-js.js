@@ -44,6 +44,13 @@ function getFmtGrammar () {
 
 /// end helpers
 
+function vcompilefmt (v) {
+    // v is { tracing: boolean, traceDepth: int, src: String, grammarName: undefined, grammars: undefined, fmt : undefined, ohm: function, compilefmt: undefined}
+    tracing = v.tracing;
+    traceDepth = v.traceDepth;
+    return compilefmt (v.src, v,ohm);
+}
+
 function compilefmt (fmtsrc, ohmlang) {
     // expand the string fmtsrc into JavaScript suitable for
     // inclusion as a semantic object for Ohm.js
