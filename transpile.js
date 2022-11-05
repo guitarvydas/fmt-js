@@ -6,7 +6,7 @@ function vtranspile (v) {
     return transpile (v.src, v.grammarName, v.grammars, v.fmt, v.ohm, v.compilefmt);
 }
 
-function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
+function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfname) {
     
     [matchsuccess, trgrammar, cst, errormessage] = patternmatch (src, grammarName, grammars, ohmlang);
     if (!matchsuccess) {
@@ -34,6 +34,11 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt) {
         var generatedFmtWalker = sem (cst);
         try {
 	    //tracing = true;
+            if (supportfname) {
+		var support = fs.readFileSync (supportfname, 'UTF-8');
+		console.log (`support :: ${support}`);
+		eval (support);
+	    }
 	    var generated = generatedFmtWalker._fmt ();
 	} catch (err) {
 	    return [false, "", err.message];
