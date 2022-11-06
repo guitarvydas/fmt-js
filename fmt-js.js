@@ -48,7 +48,7 @@ function vcompilefmt (v) {
     // v is { tracing: boolean, traceDepth: int, src: String, grammarName: undefined, grammars: undefined, fmt : undefined, ohm: function, compilefmt: undefined}
     tracing = v.tracing;
     traceDepth = v.traceDepth;
-    return compilefmt (v.src, v,ohm);
+    return compilefmt (v.src, v.ohm);
 }
 
 function compilefmt (fmtsrc, ohmlang) {
