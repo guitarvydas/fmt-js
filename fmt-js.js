@@ -1,4 +1,4 @@
-/// helpers
+// helpers
 function _ruleInit () {
 }
 
@@ -96,6 +96,8 @@ RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
   | "«" nonBracketChar* "»" -- eval
+  | "\\‛" -- beginquote
+  | "\\’" -- endquote
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
 name = letter nameRest*
@@ -196,8 +198,9 @@ ${rule}
         var keq = _keq._fmt ();
         var ws2 = _ws2._fmt ();
         var rws = _rws._fmt ();
-        var _result = `${lhs}${rws}
+        var _result = `${lhs}
 _ruleExit ("${getRuleName ()}");
+return ${rws}
 },
 `; 
         _ruleExit ("rule");
@@ -231,7 +234,7 @@ _ruleExit ("${getRuleName ()}");
         var cs = _cs._fmt ().join ('');
         var se = _se._fmt ();
         var ws = _ws._fmt ();
-        var _result = `return \`${cs}\`;`; 
+        var _result = `\`${cs}\`;`; 
         _ruleExit ("rewriteString");
         return _result; 
     },
@@ -251,6 +254,22 @@ _ruleExit ("${getRuleName ()}");
         return _result; 
     },
     
+    char_beginquote : function (_c) { 
+        _ruleEnter ("char_beginquote");
+
+        var c = _c._fmt ();
+        var _result = `${c}`; 
+        _ruleExit ("char_beginquote");
+        return _result; 
+    },
+    char_endquote : function (_c) { 
+        _ruleEnter ("char_endquote");
+
+        var c = _c._fmt ();
+        var _result = `${c}`; 
+        _ruleExit ("char_quote");
+        return _result; 
+    },
     char_raw : function (_c) { 
         _ruleEnter ("char_raw");
 
