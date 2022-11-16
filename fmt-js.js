@@ -96,8 +96,7 @@ RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
   | "«" nonBracketChar* "»" -- eval
-  | "\\‛" -- beginquote
-  | "\\’" -- endquote
+  | "\\" any -- esc
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
 name = letter nameRest*
@@ -254,20 +253,13 @@ return ${rws}
         return _result; 
     },
     
-    char_beginquote : function (_c) { 
-        _ruleEnter ("char_beginquote");
+    char_esc : function (_slash, _c) { 
+        _ruleEnter ("char_esc");
 
+        var slash = _slash._fmt ();
         var c = _c._fmt ();
         var _result = `${c}`; 
-        _ruleExit ("char_beginquote");
-        return _result; 
-    },
-    char_endquote : function (_c) { 
-        _ruleEnter ("char_endquote");
-
-        var c = _c._fmt ();
-        var _result = `${c}`; 
-        _ruleExit ("char_quote");
+        _ruleExit ("char_esc");
         return _result; 
     },
     char_raw : function (_c) { 
