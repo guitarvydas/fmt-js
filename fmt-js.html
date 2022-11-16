@@ -16,6 +16,8 @@ textarea {
 <button onclick="usesmalltest2 ()">Use small test 2.</button>
 <button onclick="usesmalltest3 ()">Use small test 3.</button>
 <button onclick="usebigtest ()">Use big test.</button>
+<button onclick="usesmalltest ()">Use backquote test.</button>
+<button onclick="usebqtest ()">Use backquote test.</button>
 <br>
 
 <p>source:</p>
@@ -109,6 +111,15 @@ NonemptyListOf [x xs+ cs+] = ‛⟨x⟩⟨xs⟩⟨cs⟩’
 }
 `;
 
+  const bqsrc = String.raw`
+Test {
+//
+RuleBQ [x] = ‛a\’b\‛c’
+//
+}
+`;
+
+
 
   function usesmalltest () {
       document.getElementById('src').innerHTML = smallsrc;
@@ -121,6 +132,9 @@ NonemptyListOf [x xs+ cs+] = ‛⟨x⟩⟨xs⟩⟨cs⟩’
   }
   function usebigtest () {
       document.getElementById('src').innerHTML = bigsrc;
+  }
+  function usebqtest () {
+      document.getElementById('src').innerHTML = bqsrc;
   }
   
   function generate () {

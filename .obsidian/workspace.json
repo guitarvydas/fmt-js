@@ -20,6 +20,14 @@
             }
           },
           {
+<<<<<<< HEAD
+            "id": "dabe1b8ee9378504",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.0.0"
+=======
             "id": "a319dda922d76eef",
             "type": "leaf",
             "state": {
@@ -28,6 +36,7 @@
                 "file": "README DEV.md",
                 "mode": "source",
                 "source": false
+>>>>>>> main
               }
             }
           }

@@ -1,4 +1,4 @@
-/// helpers
+// helpers
 function _ruleInit () {
 }
 
@@ -48,7 +48,7 @@ function vcompilefmt (v) {
     // v is { tracing: boolean, traceDepth: int, src: String, grammarName: undefined, grammars: undefined, fmt : undefined, ohm: function, compilefmt: undefined}
     tracing = v.tracing;
     traceDepth = v.traceDepth;
-    return compilefmt (v.src, v,ohm);
+    return compilefmt (v.src, v.ohm);
 }
 
 function compilefmt (fmtsrc, ohmlang) {
@@ -96,6 +96,7 @@ RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
   | "«" nonBracketChar* "»" -- eval
+  | "\\" any -- esc
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
 name = letter nameRest*
@@ -196,8 +197,9 @@ ${rule}
         var keq = _keq._fmt ();
         var ws2 = _ws2._fmt ();
         var rws = _rws._fmt ();
-        var _result = `${lhs}${rws}
+        var _result = `${lhs}
 _ruleExit ("${getRuleName ()}");
+return ${rws}
 },
 `; 
         _ruleExit ("rule");
@@ -231,7 +233,7 @@ _ruleExit ("${getRuleName ()}");
         var cs = _cs._fmt ().join ('');
         var se = _se._fmt ();
         var ws = _ws._fmt ();
-        var _result = `return \`${cs}\`;`; 
+        var _result = `\`${cs}\`;`; 
         _ruleExit ("rewriteString");
         return _result; 
     },
@@ -251,6 +253,15 @@ _ruleExit ("${getRuleName ()}");
         return _result; 
     },
     
+    char_esc : function (_slash, _c) { 
+        _ruleEnter ("char_esc");
+
+        var slash = _slash._fmt ();
+        var c = _c._fmt ();
+        var _result = `${c}`; 
+        _ruleExit ("char_esc");
+        return _result; 
+    },
     char_raw : function (_c) { 
         _ruleEnter ("char_raw");
 
