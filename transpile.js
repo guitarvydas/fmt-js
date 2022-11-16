@@ -36,7 +36,6 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfn
 	    //tracing = true;
             if (supportfname) {
 		var support = fs.readFileSync (supportfname, 'UTF-8');
-		console.log (`support :: ${support}`);
 		eval (support);
 	    }
 	    var generated = generatedFmtWalker._fmt ();
