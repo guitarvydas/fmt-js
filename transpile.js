@@ -11,6 +11,8 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfn
     [matchsuccess, trgrammar, cst, errormessage] = patternmatch (src, grammarName, grammars, ohmlang);
     if (!matchsuccess) {
 	return [false, "", "pattern matching error<br><br>" + errormessage];
+    } else if (fmt === undefined) {
+	return [false, "", "pattern matching succeeded (but without fabrication)<br><br>" + errormessage];
     } else {
 	[success, semanticsFunctionsAsString] = compfmt (fmt, ohmlang);
 	if (!success) {
