@@ -24,8 +24,8 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfn
 	try {
 	    semobj = eval (evalableSemanticsFunctions);
 	} catch (err) {
-	    console.error (evalableSemanticsFunctions);
-	    console.error (fmt);
+	    //console.error (evalableSemanticsFunctions);
+	    //console.error (fmt);
 	    return [false, null, 'error evaling .fmt specification<br><br>' + err.message];
 	}
 	try {
