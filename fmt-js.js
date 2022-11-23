@@ -65,10 +65,10 @@ function compilefmt (fmtsrc, ohmlang) {
     var fmtcst = internalgrammar.match (fmtsrc);
 
     if (fmtcst.failed ()) {
-	console.error (internalgrammar);
 	let len = fmtcst.getRightmostFailurePosition();
-        //return [false, "FORMAT: syntax error in fabrication specification\nrightmostPosition=" + len + '\n' + fmtsrc.substring (0, len)];
-        return [false, "FORMAT: syntax error in fabrication specification\nrightmostPosition=" + len + '\n'];
+        let emsg = "FORMAT: syntax error in fabrication specification\nrightmostPosition=" + len + '\n';
+	console.error (emsg);
+        return [false, emsg];
     }
     // Step 1b. Transpile User's FMT spec to a JS object (for use with Ohm-JS)
     try {
