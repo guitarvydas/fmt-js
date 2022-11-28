@@ -99,7 +99,8 @@ char =
   | "\\" any -- esc
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
-name = letter nameRest*
+name = nameFirst nameRest*
+nameFirst = "_" | letter
 nameRest = "_" | alnum
 Param =
   | name "+" -- plus
@@ -285,6 +286,15 @@ return ${rws}
         return _result; 
     },
     
+    nameFirst : function (_c) { 
+        _ruleEnter ("nameFirst");
+
+        var c = _c._fmt ();
+        var _result = `${c}`; 
+        _ruleExit ("nameFirst");
+        return _result; 
+    },
+
     nameRest : function (_c) { 
         _ruleEnter ("nameRest");
 
