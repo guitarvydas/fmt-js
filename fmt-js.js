@@ -96,7 +96,7 @@ RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
   | "«" nonBracketChar* "»" -- eval
-  | "\\n" -- newline
+  | "\\" "n" -- newline
   | "\\" any -- esc
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
