@@ -96,6 +96,7 @@ RuleLHS = name "[" Param+ "]"
 rewriteString = "‛" char* "’" spaces
 char =
   | "«" nonBracketChar* "»" -- eval
+  | "\\n" -- newline
   | "\\" any -- esc
   | ~"’" ~"]]" any     -- raw
 nonBracketChar = ~"»" ~"«"  ~"’" ~"]]" any
@@ -254,6 +255,15 @@ return ${rws}
         return _result; 
     },
     
+    char_newline : function (_slash, _c) { 
+        _ruleEnter ("char_newline");
+
+        var slash = _slash._fmt ();
+        var c = _c._fmt ();
+        var _result = `\n`; 
+        _ruleExit ("char_newline");
+        return _result; 
+    },
     char_esc : function (_slash, _c) { 
         _ruleEnter ("char_esc");
 
