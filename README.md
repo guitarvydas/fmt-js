@@ -1,61 +1,26 @@
-# FMT-JS
-A library to help in building textual programming languages.
+![[fmt-js.png]]
+A DSL for writing DSLs.
 
-Matches input source and fabricates a new string from it.
+This version - fmt-js.js - is meant for use in an HTML file.  See Fab for a node.js version that runs on the command line.
+# Usage - API
+# Usage - Demo
+![[fmt-js.png]]
+Load `fmt-js.html` into a browser.
 
-# Usage
-This is a JavaScript library function.  Call the API.
+Select one of the canned tests
+- Use small test
+- Use small test 2
+- Use small test 3
+- Use big test
+- Use escaped quote test,
 
-# API
-## Transpile
-`[success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, compilefmt)`
+or, enter code manually in the "source" input text area.
 
-Match *src* and fabricate a new source string from it.  AKA "transpilation".
+Press the "Generate JavaScript from FMT specification" button.
 
-Transpile *src* using the grammar and the *fmt* fabrication specification.  
-1. First, it compiles *fmt* to an internal form[^int] for use with Ohm-JS.
-2. Second, *src* is pattern-matched ("parsed") against the given *grammar* with name *grammarName*.  *GrammarName* is a simple string. The *grammar* is a string containing Ohm-JS DSL rules.
-3. Third, the fabrication rules are applied to the pattern match ("CST" - Concrete Syntax Tree)
-4. Fabrication produces a single string.  That string is returned in the variable *transpiled*.
-Note tht
+Copy/paste the generated JavaScript code from the "equivalent JavaScript code" text area into your app.
 
-[^int]: The internal form is JavaScript code.  See Ohm-JS documentation for the full glory of what can be specified here.  *Fmt* is a restricted syntax that is meant only for creating strings.  Ohm-JS semantics, expressed as JavaScript can do much more than this.
+# Status
+The status area - at the bottom of screen - displays "OK" if the transpilation succeeded or "FAILED" if there was an error.
 
-- success - return value - boolean true if no errors
-
-- *ohm* is a function - it must be the function supplied by Ohm-JS 
-- *compilefmt* is a function - it must be the function supplied by *fmt-js.js*
-
-The two functions - *ohm* and *compilefmt* - must be passed into the *transpile* function because of the differences between JavaScript and node.js (`src` element vs `require`) that make it impossible to write *transpile* in a generic manner.
-
-## HTML
-To load the required functions in a .HTML file, use the following code:
-```
-<!-- Ohm-JS -->
-<script src="https://unpkg.com/ohm-js@16/dist/ohm.min.js"></script>
-
-
-<!-- Transpiler -->
-<script src="fmt-js/fmt-js.js"></script>
-<script src="fmt-js/transpile.js"></script>
-
-...
-	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, compilefmt);
-...
-```
-
-Where *src*, *grammarName*, *grammar*, and, *fmt* depend on the application.
-
-Where *ohm*, and, *compilefmt* are used literally as-is.
-
-## Node.js
-To load the required functions in a node.js program, use the following code:
-
-```
-const ohm = require ('ohm-js');
-const fmt = require ('fmt-js/fmt-js.js');
-const transpiler = require ('fmt-js/transpile.js')
-...
-	  [success, transpiled, errormessage] = transpile (src, grammarName, grammar, fmt, ohm, fmt.compilefmt);
-...
-```
+Error messages are shown in the "equivalent JavaScript code" text area.

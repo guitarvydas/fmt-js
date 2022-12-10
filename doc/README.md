@@ -1,14 +1,21 @@
 # FMT-JS
-A language to help in building textual programming languages.
+A DSL to help in building programming languages.
 
 Meant to specify semantics for Ohm-JS grammars.
 
 # Usage
-This is a library function.  Call the API.
+This is a JavaScript library function.  Call the API.
 
 # API
 ## Transpile ()
+`function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfname)`
 
+returns
+`[Boolean, transpiled, errorMessage]`
+
+
+
+# Demo
 To test the transpile function...
 5. Load `tester.html` into a browser.
 6. Click "Test small" button to see that everything has loaded and is working.
@@ -27,9 +34,7 @@ See source code strings in fmt-js.html `smallsrc`, `smallsrc2`, `smallsrc3` and 
 Note that the samples can be loaded by clicking on the appropriate "Use ..." buttons (see above).
 
 # Documentation
-...to follow (second part of langjam)
-
-https://publish.obsidian.md/programmingsimplicity/2022-07-24-FMT-JS+Documentation
+Documentation from langjam0003 is https://publish.obsidian.md/programmingsimplicity/2022-07-24-FMT-JS+Documentation
 
 ## Philosophy
 Treat SCNs like bowls of candy.
