@@ -26,12 +26,12 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfn
 	} catch (err) {
 	    //console.error (evalableSemanticsFunctions);
 	    //console.error (fmt);
-	    return [false, null, 'error evaling .fmt specification<br><br>' + err.message];
+	    return [false, null, 'error evaling .fab specification<br><br>' + err.message];
 	}
 	try {
 	    sem.addOperation ("_fmt", semobj);
 	} catch (err) {
-	    return [false, null, "error in .fmt specification<br><br>" + err.message];
+	    return [false, null, "error in .fab specification<br><br>" + err.message];
 	}
         var generatedFmtWalker = sem (cst);
         try {
