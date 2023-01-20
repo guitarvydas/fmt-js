@@ -49,19 +49,14 @@ function transpile (src, grammarName, grammars, fmt, ohmlang, compfmt, supportfn
 }
 
 
-function patternmatch (src, grammarName, grammars, ohmlang) {
+function patternmatch (src, grammar, ohmlang) {
+    var pmgrammar = undefined;
     try {
-	var grammarSpecs = ohmlang.grammars (grammars);
+	pmgrammar = ohmlang.grammar (grammars);
     } catch (err) {
-	return [false, undefined, undefined, err.message];
-    }
-    try {
-	var pmgrammar = grammarSpecs [grammarName];
-    } catch (err) {
-	return [false, undefined, undefined, `grammar ${grammarName} not found in given grammars`];
     }
     if (pmgrammar === undefined) {
-	return [false, undefined, undefined, `grammar '${grammarName}' not found in given grammars`];
+	return [false, undefined, undefined, `grammar not found`];
     }
 
     try {
