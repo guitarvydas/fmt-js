@@ -44,7 +44,7 @@ function transpile (src, grammar, fmt, ohmlang, compfmt, supportfname) {
 function patternmatch (src, grammar, ohmlang) {
     var pmgrammar = undefined;
     try {
-	pmgrammar = ohmlang.grammar (grammars);
+	pmgrammar = ohmlang.grammar (grammar);
     } catch (err) {
     }
     if (pmgrammar === undefined) {
